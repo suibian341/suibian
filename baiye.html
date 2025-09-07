@@ -586,8 +586,8 @@
             }
             
             .member-photo-large img {
-                width: 200px;
-                height: 100px;
+                width: 350px;
+                height: 200px;
             }
             
             .member-info h3 {
@@ -729,16 +729,21 @@
             }
             
             body {
-                padding-top: 120px; /* 移动设备上增加顶部间距 */
+                padding-top: 140px; /* 移动设备上增加顶部间距 */
             }
             
             .hero {
-                margin-top: -120px;
+                margin-top: -140px;
                 height: 80vh;
             }
             
             .hero-content {
-                margin-top: 120px;
+                margin-top: 140px;
+            }
+            
+            /* 为所有section添加额外的移动端顶部间距 */
+            section {
+                scroll-margin-top: 140px !important;
             }
             
             .activity-card-image {
@@ -1047,9 +1052,13 @@
                     const sectionHeight = section.offsetHeight;
                     const sectionId = section.getAttribute('id');
                     
-                    // 计算更精确的滚动位置检测
-                    if (window.scrollY >= sectionTop - 200 && 
-                        window.scrollY < sectionTop + sectionHeight - 100) {
+                    // 计算更精确的滚动位置检测（移动端需要更多偏移）
+                    const isMobile = window.innerWidth <= 768;
+                    const topOffset = isMobile ? 300 : 200;
+                    const bottomOffset = isMobile ? 200 : 100;
+                    
+                    if (window.scrollY >= sectionTop - topOffset && 
+                        window.scrollY < sectionTop + sectionHeight - bottomOffset) {
                         current = sectionId;
                     }
                 });
@@ -1099,8 +1108,10 @@
                     const targetSection = document.querySelector(targetId);
                     
                     if (targetSection) {
-                        // 计算目标位置（考虑导航栏高度）
-                        const targetPosition = targetSection.offsetTop - 80;
+                        // 计算目标位置（考虑导航栏高度，移动端需要更多偏移）
+                        const isMobile = window.innerWidth <= 768;
+                        const offset = isMobile ? 140 : 80;
+                        const targetPosition = targetSection.offsetTop - offset;
                         
                         window.scrollTo({
                             top: targetPosition,
